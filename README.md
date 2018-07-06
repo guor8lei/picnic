@@ -1,6 +1,6 @@
 # picnic
 
-> A Vue.js project
+Meetup webapp built with Vue.js, Vuetify, and Firebase backend.
 
 ## Build Setup
 

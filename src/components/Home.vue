@@ -10,8 +10,10 @@
     </v-layout>
     <v-layout row wrap>
       <v-flex xs12>
-        <v-carousel>
+        <v-carousel></a>
           <v-carousel-item 
+          @click.native="onLoadPicnic(picnic.id)"
+          style="cursor: pointer;"
           v-for="picnic in picnics"
           :key="picnic.id"
           :src="picnic.imageUrl">
@@ -37,7 +39,7 @@
         picnics: [
           {
             imageUrl: 'https://timedotcom.files.wordpress.com/2014/09/201410_bpl_24rockville.jpg',
-            id: 'agwebvwebaweba',
+            id: '1',
             title: 'Rockville, MD'
           },
           {
@@ -51,6 +53,12 @@
             title: 'Washington, DC'
           }
         ]
+      }
+    },
+    methods: {
+      onLoadPicnic (id) {
+        console.log('clicked')
+        this.$router.push('/picnics/' + id)
       }
     }
   }

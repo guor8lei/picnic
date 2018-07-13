@@ -6,6 +6,7 @@ import CreatePicnic from '@/components/Picnic/CreatePicnic'
 import Profile from '@/components/User/Profile'
 import Signup from '@/components/User/Signup'
 import Signin from '@/components/User/Signin'
+import Picnic from '@/components/Picnic/Picnic'
 
 Vue.use(Router)
 
@@ -25,6 +26,11 @@ export default new Router({
       path: '/picnic/new',
       name: 'CreatePicnic',
       component: CreatePicnic
+    },
+    {
+      path: '/picnics/:id',
+      name: 'Picnic',
+      component: Picnic
     },
     {
       path: '/profile',

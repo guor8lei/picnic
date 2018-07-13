@@ -15,12 +15,12 @@
                 <v-card-title primary-title>
                   <div>
                     <h3 class="headline mb-0 white--text"> {{ picnic.title }}</h3>
-                    <div> {{ picnic.date }} </div>
+                    <div> {{ picnic.date | date }} </div>
                     <div> {{ picnic.description }} </div>
                   </div>
                 </v-card-title>
                 <v-card-actions>
-                  <v-btn flat :to="'/picnics/' + picnic.id"><v-icon left> arrow_forward</v-icon>View Picnic</v-btn>
+                  <v-btn flat :to="'/picnics/' + picnic.id" class="primary"><v-icon left> arrow_forward</v-icon>View Picnic</v-btn>
                 </v-card-actions>
               </v-flex>
             </v-layout>

@@ -8,22 +8,25 @@ export const store = new Vuex.Store({
     picnics: [{
       imageUrl: 'https://timedotcom.files.wordpress.com/2014/09/201410_bpl_24rockville.jpg',
       id: '1',
-      title: 'Rockville, MD',
-      date: '2017-07-17',
+      title: 'Basketball in Rockville',
+      date: new Date(),
+      location: 'Rockville',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. '
     },
     {
       imageUrl: 'http://52.24.98.51/wp-content/uploads/2017/06/berkeley-california-san-francisco.jpg',
       id: '23fn23lknlkn23lkn',
-      title: 'Berkeley, CA',
-      date: '2017-07-18',
+      title: 'Shopping in Berkeley',
+      date: new Date(),
+      location: 'Berkeley',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. '
     },
     {
       imageUrl: 'https://static.parade.com/wp-content/uploads/2017/09/washington-dc-travel-cars-ftr.jpg',
       id: 'absbsdasfasdfasdf',
-      title: 'Washington, DC',
-      date: '2017-07-19',
+      title: 'Swimming in DC',
+      location: 'DC',
+      date: new Date(),
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. '
     }
     ],
@@ -32,8 +35,24 @@ export const store = new Vuex.Store({
       joinedPicnics: ['1']
     }
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+    createPicnic (state, payload) {
+      state.picnics.push(payload)
+    }
+  },
+  actions: {
+    createPicnic ({commit}, payload) {
+      const picnic = {
+        title: payload.title,
+        location: payload.location,
+        imageUrl: payload.imageUrl,
+        description: payload.description,
+        date: payload.date,
+        id: payload.date.toString()
+      }
+      commit('createPicnic', picnic)
+    }
+  },
   getters: {
     getPicnics (state) {
       return state.picnics.sort((picnic1, picnic2) => {

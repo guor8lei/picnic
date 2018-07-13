@@ -11,7 +11,7 @@
                         height="400px"
                     ></v-card-media>
                     <v-card-text>
-                        <div class="info--text"> {{ picnic.date }} - {{ picnic.title }}</div>
+                        <div class="info--text"> {{ picnic.date | date }} - {{ picnic.location }}</div>
                         <div> {{ picnic.description }} </div>
                     </v-card-text>
                     <v-card-actions>

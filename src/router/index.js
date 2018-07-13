@@ -30,6 +30,7 @@ export default new Router({
     {
       path: '/picnics/:id',
       name: 'Picnic',
+      props: true,
       component: Picnic
     },
     {

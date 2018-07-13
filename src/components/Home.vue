@@ -2,7 +2,7 @@
   <v-container>
     <v-layout row wrap class="mb-3">
       <v-flex xs12 sm6 class="text-sm-right text-xs-center"></a>
-        <v-btn large to="/picnics" class="info"></a>Join Picnic</v-btn>
+        <v-btn large to="/picnics" class="info"></a>View Picnics</v-btn>
       </v-flex>
       <v-flex xs12 sm6 class="text-sm-left text-xs-center">
         <v-btn large to="/picnic/new" class="info"></a>Create Picnic</v-btn>
@@ -12,7 +12,7 @@
       <v-flex xs12>
         <v-carousel></a>
           <v-carousel-item 
-          @click.native="onLoadPicnic(picnic.id)"
+          @click.native="loadPicnic(picnic.id)"
           style="cursor: pointer;"
           v-for="picnic in picnics"
           :key="picnic.id"
@@ -34,30 +34,13 @@
 
 <script>
   export default {
-    data () {
-      return {
-        picnics: [
-          {
-            imageUrl: 'https://timedotcom.files.wordpress.com/2014/09/201410_bpl_24rockville.jpg',
-            id: '1',
-            title: 'Rockville, MD'
-          },
-          {
-            imageUrl: 'http://52.24.98.51/wp-content/uploads/2017/06/berkeley-california-san-francisco.jpg',
-            id: '23fn23lknlkn23lkn',
-            title: 'Berkeley, CA'
-          },
-          {
-            imageUrl: 'https://static.parade.com/wp-content/uploads/2017/09/washington-dc-travel-cars-ftr.jpg',
-            id: 'absbsdasfasdfasdf',
-            title: 'Washington, DC'
-          }
-        ]
+    computed: {
+      picnics () {
+        return this.$store.getters.getFeaturedPicnics
       }
     },
     methods: {
-      onLoadPicnic (id) {
-        console.log('clicked')
+      loadPicnic (id) {
         this.$router.push('/picnics/' + id)
       }
     }

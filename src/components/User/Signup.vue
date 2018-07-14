@@ -5,7 +5,7 @@
         <v-card>
           <v-card-text>
             <v-container>
-              <form>
+              <form @submit.prevent="onRegister">
                 <v-layout row>
                   <v-flex xs12>
                     <v-text-field
@@ -77,9 +77,23 @@
       }
     },
     computed: {
+      user () {
+        return this.$store.getters.getUser
+      }
+    },
+    watch: {
+      user (value) {
+        if (value !== null && value !== undefined) {
+          this.$router.push('/')
+        }
+      }
     },
     methods: {
       onRegister () {
+        this.$store.dispatch('registerUser', {
+          email: this.email,
+          password: this.password
+        })
       }
     }
   }

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import * as firebase from 'firebase'
 
 Vue.use(Vuex)
 
@@ -30,14 +31,14 @@ export const store = new Vuex.Store({
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. '
     }
     ],
-    user: {
-      id: '12412412',
-      joinedPicnics: ['1']
-    }
+    user: null
   },
   mutations: {
     createPicnic (state, payload) {
       state.picnics.push(payload)
+    },
+    setUser (state, payload) {
+      state.user = payload
     }
   },
   actions: {
@@ -51,6 +52,38 @@ export const store = new Vuex.Store({
         id: payload.date.toString()
       }
       commit('createPicnic', picnic)
+    },
+    registerUser ({commit}, payload) {
+      firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password).then(
+          user => {
+            const newUser = {
+              id: user.uid,
+              joinedPicnics: []
+            }
+            commit('setUser', newUser)
+          }
+        )
+        .catch(
+          error => {
+            console.log(error)
+          }
+        )
+    },
+    loginUser ({commit}, payload) {
+      firebase.auth().signInWithEmailAndPassword(payload.email, payload.password).then(
+          user => {
+            const newUser = {
+              id: user.uid,
+              joinedPicnics: []
+            }
+            commit('setUser', newUser)
+          }
+        )
+        .catch(
+          error => {
+            console.log(error)
+          }
+        )
     }
   },
   getters: {
@@ -68,6 +101,9 @@ export const store = new Vuex.Store({
     },
     getFeaturedPicnics (state, getters) {
       return getters.getPicnics.slice(0, 5)
+    },
+    getUser (state) {
+      return state.user
     }
   }
 })

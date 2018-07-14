@@ -35,14 +35,26 @@
 export default {
   data () {
     return {
-      sideNav: false,
-      menuItems: [
-        { icon: 'group', title: 'View Picnics', link: '/picnics' },
-        { icon: 'group_add', title: 'Create Picnic', link: '/picnic/new' },
-        { icon: 'person', title: 'Your Profile', link: '/profile' },
+      sideNav: false
+    }
+  },
+  computed: {
+    menuItems () {
+      let menuItems = [
         { icon: 'person_add', title: 'Register', link: '/signup' },
         { icon: 'person_pin', title: 'Log In', link: '/signin' }
       ]
+      if (this.isRegistered) {
+        menuItems = [
+          { icon: 'group', title: 'View Picnics', link: '/picnics' },
+          { icon: 'group_add', title: 'Create Picnic', link: '/picnic/new' },
+          { icon: 'person', title: 'Your Profile', link: '/profile' }
+        ]
+      }
+      return menuItems
+    },
+    isRegistered () {
+      return this.$store.getters.getUser !== null && this.$store.getters.getUser !== undefined
     }
   },
   name: 'App'

@@ -42,6 +42,13 @@ new Vue({
   render: h => h(App),
   created () {
     firebase.initializeApp(config)
+    firebase.auth().onAuthStateChanged(
+      (user) => {
+        if (user) {
+          this.$store.dispatch('autoLogin', user)
+        }
+      }
+    )
     this.$store.dispatch('loadPicnics')
   }
 })

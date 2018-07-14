@@ -8,7 +8,7 @@
         <v-btn large to="/picnic/new" class="info"></a>Create Picnic</v-btn>
       </v-flex>
     </v-layout>
-    <v-loyout>
+    <v-layout>
       <v-flex xs12 class="text-xs-center">
         <v-progress-circular
           indeterminate
@@ -18,7 +18,7 @@
           v-if="loading"
         ></v-progress-circular>
       </v-flex>
-    </v-loyout>
+    </v-layout>
     <v-layout row wrap v-if="!loading">
       <v-flex xs12>
         <v-carousel></a>

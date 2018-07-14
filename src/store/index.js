@@ -44,7 +44,8 @@ export const store = new Vuex.Store({
               title: object[i].title,
               description: object[i].description,
               date: object[i].date,
-              imageUrl: object[i].imageUrl
+              imageUrl: object[i].imageUrl,
+              creatorId: object[i].creatorId
             })
           }
           commit('setPicnics', picnics)
@@ -57,13 +58,14 @@ export const store = new Vuex.Store({
         }
       )
     },
-    createPicnic ({commit}, payload) {
+    createPicnic ({commit, getters}, payload) {
       const picnic = {
         title: payload.title,
         location: payload.location,
         imageUrl: payload.imageUrl,
         description: payload.description,
-        date: payload.date.toISOString()
+        date: payload.date.toISOString(),
+        creatorId: getters.getUser.id
       }
       firebase.database().ref('picnics').push(picnic).then(
         (data) => {
@@ -123,6 +125,13 @@ export const store = new Vuex.Store({
     },
     clearError ({commit}) {
       commit('clearError')
+    },
+    autoLogin ({commit}, payload) {
+      commit('setUser', {id: payload.uid, joinedPicnics: []})
+    },
+    logout ({commit}) {
+      firebase.auth().signOut()
+      commit('setUser', null)
     }
   },
   getters: {

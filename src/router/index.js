@@ -7,6 +7,7 @@ import Profile from '@/components/User/Profile'
 import Signup from '@/components/User/Signup'
 import Signin from '@/components/User/Signin'
 import Picnic from '@/components/Picnic/Picnic'
+import Redirector from './redirect'
 
 Vue.use(Router)
 
@@ -25,7 +26,8 @@ export default new Router({
     {
       path: '/picnic/new',
       name: 'CreatePicnic',
-      component: CreatePicnic
+      component: CreatePicnic,
+      beforeEnter: Redirector
     },
     {
       path: '/picnics/:id',
@@ -36,7 +38,8 @@ export default new Router({
     {
       path: '/profile',
       name: 'Profile',
-      component: Profile
+      component: Profile,
+      beforeEnter: Redirector
     },
     {
       path: '/signup',

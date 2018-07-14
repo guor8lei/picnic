@@ -7,6 +7,7 @@ import './stylus/main.styl'
 import { store } from './store'
 import DateFilter from './filters/date'
 import * as firebase from 'firebase'
+import AlertComponent from './components/Shared/Alert.vue'
 
 Vue.use(Vuetify, {
   theme: {
@@ -23,6 +24,15 @@ Vue.use(Vuetify, {
 Vue.config.productionTip = false
 
 Vue.filter('date', DateFilter)
+Vue.component('app-alert', AlertComponent)
+
+var config = {
+  apiKey: 'AIzaSyBeTFltPF-Fc_GvDCZOaePVZc2lWXDkW_g',
+  authDomain: 'join-picnic.firebaseapp.com',
+  databaseURL: 'https://join-picnic.firebaseio.com',
+  projectId: 'join-picnic',
+  storageBucket: 'join-picnic.appspot.com'
+}
 
 /* eslint-disable no-new */
 new Vue({
@@ -31,12 +41,6 @@ new Vue({
   store,
   render: h => h(App),
   created () {
-    firebase.initializeApp({
-      apiKey: 'AIzaSyBeTFltPF-Fc_GvDCZOaePVZc2lWXDkW_g',
-      authDomain: 'join-picnic.firebaseapp.com',
-      databaseURL: 'https://join-picnic.firebaseio.com',
-      projectId: 'join-picnic',
-      storageBucket: 'join-picnic.appspot.com'
-    })
+    firebase.initializeApp(config)
   }
 })

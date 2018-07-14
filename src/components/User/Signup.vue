@@ -1,5 +1,10 @@
 <template>
   <v-container>
+    <v-layout row class="mb-2" v-if="error">
+      <v-flex xs12 sm6 offset-sm3>
+        <app-alert @close="onClose" :text="error.message"></app-alert>
+      </v-flex>
+    </v-layout>
     <v-layout row>
       <v-flex xs12 sm6 offset-sm3>
         <v-card>
@@ -14,7 +19,8 @@
                     id="email"
                     v-model="email"
                     type="email"
-                    :rules="[rules.required, rules.email]">
+                    :rules="[rules.required, rules.email]"
+                    required>
                     </v-text-field>
                   </v-flex>
                 </v-layout>
@@ -26,7 +32,8 @@
                     id="password"
                     v-model="password"
                     type="password"
-                    :rules="[rules.required]">
+                    :rules="[rules.required]"
+                    required>
                     </v-text-field>
                   </v-flex>
                 </v-layout>
@@ -38,13 +45,17 @@
                     id="confirmPassword"
                     v-model="confirmPassword"
                     type="password"
-                    :rules="[rules.required, rules.comparePasswords]">
+                    :rules="[rules.required, rules.comparePasswords]"
+                    required>
                     </v-text-field>
                   </v-flex>
                 </v-layout>
                 <v-layout row>
                   <v-flex xs12>
-                    <v-btn flat class="primary" type="submit">Register</v-btn>
+                    <v-btn flat class="primary"
+                    type="submit"
+                    :disabled="loading"
+                    :loading="loading">Register</v-btn>
                   </v-flex>
                 </v-layout>
               </form>
@@ -79,6 +90,12 @@
     computed: {
       user () {
         return this.$store.getters.getUser
+      },
+      error () {
+        return this.$store.getters.getError
+      },
+      loading () {
+        return this.$store.getters.getLoading
       }
     },
     watch: {
@@ -94,6 +111,9 @@
           email: this.email,
           password: this.password
         })
+      },
+      onClose () {
+        this.$store.dispatch('clearError')
       }
     }
   }

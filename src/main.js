@@ -6,6 +6,7 @@ import 'vuetify/dist/vuetify.min.css'
 import './stylus/main.styl'
 import { store } from './store'
 import DateFilter from './filters/date'
+import * as firebase from 'firebase'
 
 Vue.use(Vuetify, {
   theme: {
@@ -28,5 +29,14 @@ new Vue({
   el: '#app',
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  created () {
+    firebase.initializeApp({
+      apiKey: 'AIzaSyBeTFltPF-Fc_GvDCZOaePVZc2lWXDkW_g',
+      authDomain: 'join-picnic.firebaseapp.com',
+      databaseURL: 'https://join-picnic.firebaseio.com',
+      projectId: 'join-picnic',
+      storageBucket: 'join-picnic.appspot.com'
+    })
+  }
 })

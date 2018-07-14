@@ -42,5 +42,6 @@ new Vue({
   render: h => h(App),
   created () {
     firebase.initializeApp(config)
+    this.$store.dispatch('loadPicnics')
   }
 })

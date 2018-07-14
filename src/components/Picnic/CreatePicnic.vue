@@ -51,15 +51,14 @@
           </v-layout>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-              <v-text-field
+              <v-textarea
                 name="description"
                 label="Description"
                 id="description"
                 clearable
-                multi-line
                 v-model="description"
                 :rules="[rules.required]">
-              </v-text-field>
+              </v-textarea>
             </v-flex>
           </v-layout>
           <v-layout row>

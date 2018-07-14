@@ -6,31 +6,7 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    picnics: [{
-      imageUrl: 'https://timedotcom.files.wordpress.com/2014/09/201410_bpl_24rockville.jpg',
-      id: '1',
-      title: 'Basketball in Rockville',
-      date: new Date(),
-      location: 'Rockville',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. '
-    },
-    {
-      imageUrl: 'http://52.24.98.51/wp-content/uploads/2017/06/berkeley-california-san-francisco.jpg',
-      id: '23fn23lknlkn23lkn',
-      title: 'Shopping in Berkeley',
-      date: new Date(),
-      location: 'Berkeley',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. '
-    },
-    {
-      imageUrl: 'https://static.parade.com/wp-content/uploads/2017/09/washington-dc-travel-cars-ftr.jpg',
-      id: 'absbsdasfasdfasdf',
-      title: 'Swimming in DC',
-      location: 'DC',
-      date: new Date(),
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. '
-    }
-    ],
+    picnics: [],
     user: null,
     loading: false,
     error: null
@@ -50,19 +26,58 @@ export const store = new Vuex.Store({
     },
     clearError (state) {
       state.error = null
+    },
+    setPicnics (state, payload) {
+      state.picnics = payload
     }
   },
   actions: {
+    loadPicnics ({commit}) {
+      commit('setLoading', true)
+      firebase.database().ref('picnics').once('value').then(
+        (data) => {
+          const picnics = []
+          const object = data.val()
+          for (let i in object) {
+            picnics.push({
+              id: i,
+              title: object[i].title,
+              description: object[i].description,
+              date: object[i].date,
+              imageUrl: object[i].imageUrl
+            })
+          }
+          commit('setPicnics', picnics)
+          commit('setLoading', false)
+        }
+      ).catch(
+        (error) => {
+          console.log(error)
+          commit('setLoading', false)
+        }
+      )
+    },
     createPicnic ({commit}, payload) {
       const picnic = {
         title: payload.title,
         location: payload.location,
         imageUrl: payload.imageUrl,
         description: payload.description,
-        date: payload.date,
-        id: payload.date.toString()
+        date: payload.date.toISOString()
       }
-      commit('createPicnic', picnic)
+      firebase.database().ref('picnics').push(picnic).then(
+        (data) => {
+          const key = data.key
+          commit('createPicnic', {
+            ...picnic,
+            id: key
+          })
+        }
+      ).catch(
+        (error) => {
+          console.log(error)
+        }
+      )
     },
     registerUser ({commit}, payload) {
       commit('setLoading', true)

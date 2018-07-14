@@ -8,7 +8,18 @@
         <v-btn large to="/picnic/new" class="info"></a>Create Picnic</v-btn>
       </v-flex>
     </v-layout>
-    <v-layout row wrap>
+    <v-loyout>
+      <v-flex xs12 class="text-xs-center">
+        <v-progress-circular
+          indeterminate
+          color="primary"
+          :size="100"
+          :width="8"
+          v-if="loading"
+        ></v-progress-circular>
+      </v-flex>
+    </v-loyout>
+    <v-layout row wrap v-if="!loading">
       <v-flex xs12>
         <v-carousel></a>
           <v-carousel-item 
@@ -24,7 +35,7 @@
         </v-carousel>
       </v-flex>
     </v-layout>
-    <v-layout row wrap class="mt-3">
+    <v-layout row wrap class="mt-3" v-if="!loading">
       <v-flex xs12 class="text-xs-center"></a>
         <p>Join now!</p>
       </v-flex>
@@ -37,6 +48,9 @@
     computed: {
       picnics () {
         return this.$store.getters.getFeaturedPicnics
+      },
+      loading () {
+        return this.$store.getters.getLoading
       }
     },
     methods: {

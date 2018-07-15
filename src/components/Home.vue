@@ -1,11 +1,8 @@
 <template>
   <v-container>
     <v-layout row wrap class="mb-3">
-      <v-flex xs12 sm6 class="text-sm-right text-xs-center"></a>
-        <v-btn large to="/picnics" class="info"></a>View Picnics</v-btn>
-      </v-flex>
-      <v-flex xs12 sm6 class="text-sm-left text-xs-center">
-        <v-btn large to="/picnic/new" class="info"></a>Create Picnic</v-btn>
+      <v-flex xs12 class="text-xs-center"></a>
+        <h1 class="primary--text">Featured Picnics</h1>
       </v-flex>
     </v-layout>
     <v-layout>
@@ -38,6 +35,14 @@
     <v-layout row wrap class="mt-3" v-if="!loading">
       <v-flex xs12 class="text-xs-center"></a>
         <p>Join now!</p>
+      </v-flex>
+    </v-layout>
+    <v-layout row wrap>
+      <v-flex xs12 sm6 class="text-sm-right text-xs-center"></a>
+        <v-btn depressed round large to="/picnics" class="primary"></a>View Picnics</v-btn>
+      </v-flex>
+      <v-flex xs12 sm6 class="text-sm-left text-xs-center">
+        <v-btn depressed round large to="/picnic/new" class="primary"></a>Create Picnic</v-btn>
       </v-flex>
     </v-layout>
   </v-container>

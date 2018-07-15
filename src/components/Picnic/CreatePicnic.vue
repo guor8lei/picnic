@@ -34,23 +34,6 @@
           </v-layout>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-              <v-text-field
-                name="imageUrl"
-                label="Image URL"
-                id="image-url"
-                clearable
-                v-model="imageUrl"
-                :rules="[rules.required]">
-              </v-text-field>
-            </v-flex>
-          </v-layout>
-          <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
-              <img :src="imageUrl" height="200px">
-            </v-flex>
-          </v-layout>
-          <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
               <v-textarea
                 name="description"
                 label="Description"
@@ -59,6 +42,27 @@
                 v-model="description"
                 :rules="[rules.required]">
               </v-textarea>
+            </v-flex>
+          </v-layout>
+          <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
+              <v-text-field
+              label="Image"
+              readonly
+              single-line
+              value="Image"
+              ></v-text-field>
+            </v-flex>
+          </v-layout>
+          <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
+              <v-btn depressed round class="primary" @click="onUploadFile">Upload Image</v-btn>
+              <input type="file" style="display: none" ref="inputFile" accept="image/*" @change="onPickImage">
+            </v-flex>
+          </v-layout>
+          <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
+              <img :src="imageUrl" height="200px">
             </v-flex>
           </v-layout>
           <v-layout row>
@@ -83,7 +87,7 @@
           </v-layout>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-              <v-btn class="primary" :disabled="!formIsValid" type="submit">Create Picnic</v-btn>
+              <v-btn round depressed class="primary" :disabled="!formIsValid" type="submit">Create Picnic</v-btn>
             </v-flex>
           </v-layout>
         </form>
@@ -105,7 +109,8 @@
         imageUrl: '',
         description: '',
         date: currDate.toISOString().substring(0, currDate.toISOString().indexOf('T')),
-        time: currDate
+        time: currDate,
+        image: null
       }
     },
     computed: {
@@ -134,15 +139,35 @@
         if (!this.formIsValid) {
           return
         }
+        if (!this.image) {
+          return
+        }
         const picnicData = {
           title: this.title,
           location: this.location,
-          imageUrl: this.imageUrl,
+          image: this.image,
           description: this.description,
           date: this.formatDateTime
         }
         this.$store.dispatch('createPicnic', picnicData)
         this.$router.push('/picnics')
+      },
+      onUploadFile () {
+        this.$refs.inputFile.click()
+      },
+      onPickImage (event) {
+        const imgs = event.target.files
+        let img = imgs[0]
+        let imgname = img.name
+        if (imgname.lastIndexOf('.') <= 0) {
+          return alert('Invalid image file.')
+        }
+        const reader = new FileReader()
+        reader.addEventListener('load', () => {
+          this.imageUrl = reader.result
+        })
+        reader.readAsDataURL(img)
+        this.image = img
       }
     }
   }

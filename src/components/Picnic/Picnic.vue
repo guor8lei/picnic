@@ -4,7 +4,7 @@
             <v-flex xs12>
                 <v-card>
                     <v-card-title>
-                        <h4 class="primary--text"> {{ picnic.title }} </h4>
+                        <h1 class="primary--text"> {{ picnic.title }} </h1>
                     </v-card-title>
                     <v-card-media
                         :src="picnic.imageUrl"
@@ -16,7 +16,7 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn flat class="accent">Register</v-btn>
+                        <v-btn flat round class="accent">Register</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-flex>

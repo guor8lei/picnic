@@ -43,6 +43,7 @@ export const store = new Vuex.Store({
               id: i,
               title: object[i].title,
               description: object[i].description,
+              location: object[i].location,
               date: object[i].date,
               imageUrl: object[i].imageUrl,
               creatorId: object[i].creatorId
@@ -62,16 +63,37 @@ export const store = new Vuex.Store({
       const picnic = {
         title: payload.title,
         location: payload.location,
-        imageUrl: payload.imageUrl,
         description: payload.description,
         date: payload.date.toISOString(),
         creatorId: getters.getUser.id
       }
+      let imageUrl = ''
+      let key
+      const imgname = payload.image.name
+      const imgext = imgname.slice(imgname.lastIndexOf('.'))
       firebase.database().ref('picnics').push(picnic).then(
         (data) => {
-          const key = data.key
+          key = data.key
+          return key
+        }
+      ).then(
+        (key) => {
+          return firebase.storage().ref('picnics/' + key + '.' + imgext).put(payload.image)
+        }
+      ).then(
+        () => {
+          return firebase.storage().ref('picnics/' + key + '.' + imgext).getDownloadURL()
+        }
+      ).then(
+        (url) => {
+          imageUrl = url
+          return firebase.database().ref('picnics').child(key).update({imageUrl: imageUrl})
+        }
+      ).then(
+        () => {
           commit('createPicnic', {
             ...picnic,
+            imageUrl: imageUrl,
             id: key
           })
         }

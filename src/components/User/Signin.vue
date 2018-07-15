@@ -8,6 +8,12 @@
     <v-layout row>
       <v-flex xs12 sm6 offset-sm3>
         <v-card>
+          <v-card-title primary-title>
+            <div>
+              <h3 class="headline primary--text mb-2">Login</h3>
+              <p>Please enter your login information below.</p>
+            </div>
+          </v-card-title>
           <v-card-text>
             <v-container>
               <form @submit.prevent="onLogin">

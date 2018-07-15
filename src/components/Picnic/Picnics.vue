@@ -20,7 +20,7 @@
                   </div>
                 </v-card-title>
                 <v-card-actions>
-                  <v-btn flat :to="'/picnics/' + picnic.id" class="primary"><v-icon left> arrow_forward</v-icon>View Picnic</v-btn>
+                  <v-btn depressed round :to="'/picnics/' + picnic.id" class="primary"><v-icon left> arrow_forward</v-icon>View Picnic</v-btn>
                 </v-card-actions>
               </v-flex>
             </v-layout>

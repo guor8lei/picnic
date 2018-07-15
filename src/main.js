@@ -31,7 +31,7 @@ var config = {
   authDomain: 'join-picnic.firebaseapp.com',
   databaseURL: 'https://join-picnic.firebaseio.com',
   projectId: 'join-picnic',
-  storageBucket: 'join-picnic.appspot.com'
+  storageBucket: 'gs://join-picnic.appspot.com'
 }
 
 /* eslint-disable no-new */

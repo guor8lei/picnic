@@ -29,6 +29,20 @@ export const store = new Vuex.Store({
     },
     setPicnics (state, payload) {
       state.picnics = payload
+    },
+    updatePicnic (state, payload) {
+      const picnic = state.picnics.find((picnic) => {
+        return picnic.id === payload.id
+      })
+      if (payload.title) {
+        picnic.title = payload.title
+      }
+      if (payload.description) {
+        picnic.description = payload.description
+      }
+      if (payload.date) {
+        picnic.date = payload.date
+      }
     }
   },
   actions: {
@@ -99,6 +113,30 @@ export const store = new Vuex.Store({
         }
       ).catch(
         (error) => {
+          console.log(error)
+        }
+      )
+    },
+    updatePicnic ({commit}, payload) {
+      commit('setLoading', true)
+      const newPicnic = {}
+      if (payload.title) {
+        newPicnic.title = payload.title
+      }
+      if (payload.description) {
+        newPicnic.description = payload.description
+      }
+      if (payload.date) {
+        newPicnic.date = payload.date
+      }
+      firebase.database().ref('picnics').child(payload.id).update(newPicnic).then(
+        () => {
+          commit('setLoading', false)
+          commit('updatePicnic', payload)
+        }
+      ).catch(
+        (error) => {
+          commit('setLoading', false)
           console.log(error)
         }
       )

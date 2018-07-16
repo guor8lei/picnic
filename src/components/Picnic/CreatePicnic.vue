@@ -14,9 +14,9 @@
                 name="title"
                 label="Title"
                 id="title"
-                clearable
                 v-model="title"
-                :rules="[rules.required]">
+                :rules="[rules.required]"
+                required>
               </v-text-field>
             </v-flex>
           </v-layout>
@@ -26,9 +26,9 @@
                 name="location"
                 label="Location"
                 id="location"
-                clearable
                 v-model="location"
-                :rules="[rules.required]">
+                :rules="[rules.required]"
+                required>
               </v-text-field>
             </v-flex>
           </v-layout>
@@ -38,9 +38,9 @@
                 name="description"
                 label="Description"
                 id="description"
-                clearable
                 v-model="description"
-                :rules="[rules.required]">
+                :rules="[rules.required]"
+                required>
               </v-textarea>
             </v-flex>
           </v-layout>
@@ -115,10 +115,10 @@
     },
     computed: {
       formIsValid () {
-        return this.title !== '' &&
-          this.location !== '' &&
-          this.imageUrl !== '' &&
-          this.description !== ''
+        return this.title.trim() !== '' &&
+          this.location.trim() !== '' &&
+          this.imageUrl.trim() !== '' &&
+          this.description.trim() !== ''
       },
       formatDateTime () {
         const date = new Date(this.date)

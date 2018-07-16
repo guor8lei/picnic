@@ -11,7 +11,7 @@
                   height="200px"
                 ></v-card-media>
               </v-flex>
-              <v-flex xs7 sm8 md9>
+              <v-flex xs7 sm8 md9 class="mb-4">
                 <v-card-title primary-title>
                   <div>
                     <h3 class="headline mb-0 white--text"> {{ picnic.title }}</h3>
@@ -19,8 +19,8 @@
                     <div> {{ picnic.description }} </div>
                   </div>
                 </v-card-title>
-                <v-card-actions>
-                  <v-btn depressed round :to="'/picnics/' + picnic.id" class="primary"><v-icon left> arrow_forward</v-icon>View Picnic</v-btn>
+                <v-card-actions style="bottom: 5px; position: absolute; right: 5px">
+                  <v-btn depressed round :to="'/picnics/' + picnic.id" class="primary"><v-icon left> arrow_forward</v-icon>Details</v-btn>
                 </v-card-actions>
               </v-flex>
             </v-layout>

@@ -43,6 +43,9 @@ export const store = new Vuex.Store({
       if (payload.date) {
         picnic.date = payload.date
       }
+      if (payload.location) {
+        picnic.location = payload.location
+      }
     }
   },
   actions: {
@@ -128,6 +131,9 @@ export const store = new Vuex.Store({
       }
       if (payload.date) {
         newPicnic.date = payload.date
+      }
+      if (payload.location) {
+        newPicnic.location = payload.location
       }
       firebase.database().ref('picnics').child(payload.id).update(newPicnic).then(
         () => {

@@ -75,14 +75,10 @@
               ></v-text-field>
             </v-flex>
           </v-layout>
-          <v-layout row class="mb-2">
-            <v-flex xs12 sm6 offset-sm3>
-              <v-date-picker v-model="date" :landscape="true"></v-date-picker>
-            </v-flex>
-          </v-layout>
-          <v-layout row class="mb-2">
-            <v-flex xs12 sm6 offset-sm3>
-              <v-time-picker v-model="time" :landscape="true"></v-time-picker>
+          <v-layout row wrap class="mb-2">
+            <v-flex xs12 sm6 offset-sm3 style="text-align: center">
+              <v-date-picker v-model="date" class="mb-3"></v-date-picker>
+              <v-time-picker v-model="time"></v-time-picker>
             </v-flex>
           </v-layout>
           <v-layout row>

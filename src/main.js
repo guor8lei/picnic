@@ -8,7 +8,7 @@ import { store } from './store'
 import DateFilter from './filters/date'
 import * as firebase from 'firebase'
 import AlertComponent from './components/Shared/Alert.vue'
-import EditPicnicComponent from './components/Picnic/Edit/EditPicnic.vue'
+import EditPicnicComponent from './components/Picnic/Popup/EditPicnic.vue'
 
 Vue.use(Vuetify, {
   theme: {

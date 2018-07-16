@@ -1,6 +1,22 @@
 <template>
   <v-container>
-    <v-layout row wrap  v-for="picnic in picnics" :key="picnic.id" class="mb-3">
+    <v-layout row wrap class="mb-3">
+      <v-flex xs12 class="text-xs-center"></a>
+        <h1 class="primary--text">All Picnics</h1>
+      </v-flex>
+    </v-layout>
+    <v-layout>
+      <v-flex xs12 class="text-xs-center">
+        <v-progress-circular
+          indeterminate
+          color="primary"
+          :size="100"
+          :width="8"
+          v-if="loading"
+        ></v-progress-circular>
+      </v-flex>
+    </v-layout>
+    <v-layout row wrap  v-for="picnic in picnics" :key="picnic.id" class="mb-3" v-if="!loading">
       <v-flex xs12 sm10 offset-sm1>
         <v-card class="accent">
           <v-container fluid>
@@ -36,6 +52,9 @@
     computed: {
       picnics () {
         return this.$store.getters.getPicnics
+      },
+      loading () {
+        return this.$store.getters.getLoading
       }
     }
   }

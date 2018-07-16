@@ -46,9 +46,58 @@ export const store = new Vuex.Store({
       if (payload.location) {
         picnic.location = payload.location
       }
+    },
+    joinPicnic (state, payload) {
+      const id = payload.id
+      // eslint-disable-next-line
+      if (state.user.joinedPicnics.findIndex((picnic) => { picnic.id === id }) >= 0) {
+        return
+      }
+      state.user.joinedPicnics.push(id)
+      state.user.fbKeys[id] = payload.fbKey
+    },
+    leavePicnic (state, payload) {
+      const joinedPicnics = state.user.joinedPicnics
+      // eslint-disable-next-line
+      joinedPicnics.splice(joinedPicnics.findIndex((picnic) => { picnic.id === payload }), 1)
+      Reflect.deleteProperty(state.user.fbKeys, payload)
     }
   },
   actions: {
+    joinPicnic ({commit, getters}, payload) {
+      commit('setLoading', true)
+      const user = getters.getUser
+      firebase.database().ref('/users/' + user.id).child('/joins/').push(payload).then(
+        (data) => {
+          commit('setLoading', false)
+          commit('joinPicnic', {id: payload, fbKey: data.key})
+        }
+      ).catch(
+        (error) => {
+          commit('setLoading', false)
+          console.log(error)
+        }
+      )
+    },
+    leavePicnic ({commit, getters}, payload) {
+      commit('setLoading', true)
+      const user = getters.getUser
+      if (!user.fbKeys) {
+        return
+      }
+      const fbKey = user.fbKeys[payload]
+      firebase.database().ref('/users/' + user.id + '/joins/').child(fbKey).remove().then(
+        (data) => {
+          commit('setLoading', false)
+          commit('leavePicnic', payload)
+        }
+      ).catch(
+        (error) => {
+          commit('setLoading', false)
+          console.log(error)
+        }
+      )
+    },
     loadPicnics ({commit}) {
       commit('setLoading', true)
       firebase.database().ref('picnics').once('value').then(
@@ -77,6 +126,7 @@ export const store = new Vuex.Store({
       )
     },
     createPicnic ({commit, getters}, payload) {
+      commit('setLoading', true)
       const picnic = {
         title: payload.title,
         location: payload.location,
@@ -108,6 +158,7 @@ export const store = new Vuex.Store({
         }
       ).then(
         () => {
+          commit('setLoading', false)
           commit('createPicnic', {
             ...picnic,
             imageUrl: imageUrl,
@@ -116,6 +167,7 @@ export const store = new Vuex.Store({
         }
       ).catch(
         (error) => {
+          commit('setLoading', false)
           console.log(error)
         }
       )
@@ -155,7 +207,8 @@ export const store = new Vuex.Store({
             commit('setLoading', false)
             const newUser = {
               id: user.uid,
-              joinedPicnics: []
+              joinedPicnics: [],
+              fbKeys: {}
             }
             commit('setUser', newUser)
           }
@@ -176,7 +229,8 @@ export const store = new Vuex.Store({
             commit('setLoading', false)
             const newUser = {
               id: user.uid,
-              joinedPicnics: []
+              joinedPicnics: [],
+              fbKeys: {}
             }
             commit('setUser', newUser)
           }
@@ -193,7 +247,7 @@ export const store = new Vuex.Store({
       commit('clearError')
     },
     autoLogin ({commit}, payload) {
-      commit('setUser', {id: payload.uid, joinedPicnics: []})
+      commit('setUser', {id: payload.uid, joinedPicnics: [], fbKeys: {}})
     },
     logout ({commit}) {
       firebase.auth().signOut()

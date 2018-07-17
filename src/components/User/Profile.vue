@@ -49,6 +49,9 @@
 
 <script>
   export default {
+    beforeCreate () {
+      this.$store.dispatch('fetchUserPicnics')
+    },
     computed: {
       picnics () {
         const picnicIds = this.$store.getters.getUserPicnics

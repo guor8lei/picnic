@@ -42,6 +42,10 @@
     methods: {
       onConfirm () {
         this.showDialog = false
+        this.$store.dispatch('deleteJoin', {
+          attendIds: this.$store.getters.getPicnic(this.picnic.id).attendIds,
+          picnicId: this.picnic.id
+        })
         this.$store.dispatch('deletePicnic', {
           id: this.picnic.id
         })

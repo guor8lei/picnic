@@ -28,22 +28,6 @@ export default {
         picnic.location = payload.location
       }
     },
-    removeAttendee (state, payload) {
-      const picnic = state.picnics.find((picnic) => {
-        return picnic.id === payload.id
-      })
-      const attendeeIndex = picnic.attendIds.indexOf(payload.userId)
-      if (attendeeIndex === -1) {
-        return
-      }
-      picnic.attendIds.splice(attendeeIndex, 1)
-    },
-    addAttendee (state, payload) {
-      const picnic = state.picnics.find((picnic) => {
-        return picnic.id === payload.id
-      })
-      picnic.attendIds.push(payload.userId)
-    },
     deletePicnic (state, payload) {
       const picnic = state.picnics.find((picnic) => {
         return picnic.id === payload.id
@@ -164,10 +148,6 @@ export default {
       firebase.database().ref('picnics').child(payload).update(newPicnic).then(
         () => {
           commit('setLoading', false)
-          commit('addAttendee', {
-            id: payload,
-            userId: getters.getUser.id
-          })
         }
       ).catch(
         (error) => {
@@ -187,10 +167,6 @@ export default {
       firebase.database().ref('picnics').child(payload).update(newPicnic).then(
         () => {
           commit('setLoading', false)
-          commit('removeAttendee', {
-            id: payload,
-            userId: getters.getUser.id
-          })
         }
       ).catch(
         (error) => {

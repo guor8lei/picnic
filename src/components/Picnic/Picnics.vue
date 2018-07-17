@@ -32,6 +32,7 @@
                   <div>
                     <h3 class="headline white--text"> {{ picnic.title }}</h3>
                     <div> {{ picnic.date | date }} </div>
+                    <div> {{ picnic.attendIds.length - 1 }} Picnickers</div>
                     <div> {{ picnic.description }} </div>
                   </div>
                 </v-card-title>

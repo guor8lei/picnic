@@ -59,6 +59,37 @@ export default {
         }
       )
     },
+    deleteJoin ({commit}, payload) {
+      const attendIds = payload.attendIds
+      if (attendIds.length === 1) {
+        return
+      }
+      attendIds.splice(0, 1)
+      commit('setLoading', true)
+      for (let userIdKey in attendIds) {
+        firebase.database().ref('/users/' + attendIds[userIdKey] + '/joins/').once('value').then(
+          (data) => {
+            const values = data.val()
+            let newJoin = {}
+            for (let key in values) {
+              if (values[key] !== payload.picnicId) {
+                newJoin[key] = values[key]
+              }
+            }
+            return firebase.database().ref('/users/' + attendIds[userIdKey] + '/joins/').set(newJoin)
+          }
+        ).then(
+          (data) => {
+            commit('setLoading', false)
+          }
+        ).catch(
+          (error) => {
+            console.log(error)
+            commit('setLoading', false)
+          }
+        )
+      }
+    },
     registerUser ({commit}, payload) {
       commit('setLoading', true)
       commit('clearError')

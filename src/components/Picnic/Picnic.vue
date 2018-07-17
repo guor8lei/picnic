@@ -28,11 +28,12 @@
             ></v-card-media>
           <v-card-text>
             <div class="info--text"> {{ picnic.date | date }} - {{ picnic.location }}</div>
+            <div class="info--text"> {{ picnic.attendIds.length - 1 }} Picnickers</div>
             <div> {{ picnic.description }} </div>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <app-join-picnic :picnicId="picnic.id" v-if="isRegistered && !isCreator"></app-join-picnic>
+            <app-join-picnic :picnicId="picnic.id" v-if="isRegistered"></app-join-picnic>
           </v-card-actions>
         </v-card>
       </v-flex>

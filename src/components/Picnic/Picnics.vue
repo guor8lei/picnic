@@ -30,7 +30,7 @@
               <v-flex xs7 sm8 md9 class="mb-4">
                 <v-card-title primary-title>
                   <div>
-                    <h3 class="headline mb-0 white--text"> {{ picnic.title }}</h3>
+                    <h3 class="headline white--text"> {{ picnic.title }}</h3>
                     <div> {{ picnic.date | date }} </div>
                     <div> {{ picnic.description }} </div>
                   </div>

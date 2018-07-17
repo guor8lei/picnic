@@ -34,7 +34,7 @@
     </v-layout>
     <v-layout row wrap class="mt-3" v-if="!loading">
       <v-flex xs12 class="text-xs-center"></a>
-        <p>Join now!</p>
+        <p>Picnic is an organization and sharing tool for all kinds of events. Create, edit, join, and leave events anytime, anywhere. Join now!</p>
       </v-flex>
     </v-layout>
     <v-layout row wrap>

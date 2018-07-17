@@ -58,7 +58,7 @@ export default {
         menuItems = [
           { icon: 'group', title: 'View Picnics', link: '/picnics' },
           { icon: 'group_add', title: 'Create Picnic', link: '/picnic/new' },
-          { icon: 'person', title: 'Your Profile', link: '/profile' }
+          { icon: 'person', title: 'Joined Picnics', link: '/joined' }
         ]
       }
       return menuItems

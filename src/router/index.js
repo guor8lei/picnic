@@ -36,8 +36,8 @@ export default new Router({
       component: Picnic
     },
     {
-      path: '/profile',
-      name: 'Profile',
+      path: '/joined',
+      name: 'Joined',
       component: Profile,
       beforeEnter: Redirector
     },

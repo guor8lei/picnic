@@ -45,7 +45,7 @@
                 </v-layout>
                 <v-layout row>
                   <v-flex xs12>
-                    <v-btn flat class="primary"
+                    <v-btn depressed round class="primary"
                     type="submit"
                     :disabled="loading"
                     :loading="loading">Login</v-btn>

@@ -58,9 +58,9 @@
                 </v-layout>
                 <v-layout row>
                   <v-flex xs12>
-                    <v-btn flat class="primary"
+                    <v-btn depressed round class="primary"
                     type="submit"
-                    :disabled="loading"
+                    :disabled="loading || !formIsValid"
                     :loading="loading">Register</v-btn>
                   </v-flex>
                 </v-layout>
@@ -102,6 +102,11 @@
       },
       loading () {
         return this.$store.getters.getLoading
+      },
+      formIsValid () {
+        return this.email.trim() !== '' &&
+          this.password.trim() !== '' &&
+          this.password === this.confirmPassword
       }
     },
     watch: {

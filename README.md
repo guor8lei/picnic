@@ -1,8 +1,8 @@
-# picnic
+# Picnic
 
-Meetup webapp built with Vue.js, Vuetify, and Firebase backend.
+Picnic is an event organizing webapp built with Vue.js frontend and Firebase backend. You can check out a live demo of this application here: https://join-picnic.firebaseapp.com/
 
-## Build Setup
+## Running the App Locally
 
 ``` bash
 # install dependencies
@@ -10,12 +10,11 @@ npm install
 
 # serve with hot reload at localhost:8080
 npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## Credits
+
+The following resources were used to create this web application:
++ Based on the Vue.js tutorial by Academind.
++ Frontend styled with Vuetify.
++ Database, storage, authentication, and hosting handled by Firebase.

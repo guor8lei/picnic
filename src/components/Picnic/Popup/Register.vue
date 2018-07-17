@@ -44,8 +44,10 @@
       onConfirm () {
         this.showDialog = false
         if (this.isJoined) {
+          this.$store.dispatch('removeAttendee', this.picnicId)
           this.$store.dispatch('leavePicnic', this.picnicId)
         } else {
+          this.$store.dispatch('addAttendee', this.picnicId)
           this.$store.dispatch('joinPicnic', this.picnicId)
         }
       }

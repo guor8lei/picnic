@@ -1,21 +1,20 @@
 <template>
   <v-dialog persistent v-model="showDialog" max-width="500px">
-    <v-btn depressed slot="activator" class="accent" round>
-      {{ isJoined ? 'Leave' : 'Join' }}
+    <v-btn depressed slot="activator" class="accent" fab>
+      <v-icon>delete_forever</v-icon>
     </v-btn>
     <v-card>
       <v-container>
         <v-layout row wrap>
           <v-flex xs12>
-            <v-card-title class="headline primary--text" v-if="isJoined">Leave Picnic</v-card-title>
-            <v-card-title class="headline primary--text" v-else>Join Picnic</v-card-title>
+            <v-card-title class="headline primary--text">Delete Picnic</v-card-title>
           </v-flex>
         </v-layout>
         <v-divider></v-divider>
         <v-layout row wrap>
           <v-flex xs12>
             <v-card-text>
-              Are you sure? You can revert your changes later.
+              Are you sure? You cannot undo this.
             </v-card-text>
           </v-flex>
         </v-layout>
@@ -34,7 +33,7 @@
 
 <script>
   export default {
-    props: ['picnicId'],
+    props: ['picnic'],
     data () {
       return {
         showDialog: false
@@ -43,18 +42,10 @@
     methods: {
       onConfirm () {
         this.showDialog = false
-        if (this.isJoined) {
-          this.$store.dispatch('leavePicnic', this.picnicId)
-        } else {
-          this.$store.dispatch('joinPicnic', this.picnicId)
-        }
-      }
-    },
-    computed: {
-      isJoined () {
-        return this.$store.getters.getUser.joinedPicnics.findIndex((picnicId) => {
-          return picnicId === this.picnicId
-        }) >= 0
+        this.$store.dispatch('deletePicnic', {
+          id: this.picnic.id
+        })
+        this.$router.push('/picnics')
       }
     }
   }

@@ -19,6 +19,7 @@
             <template v-if="isCreator">
               <v-spacer></v-spacer>
               <app-edit-picnic :picnic="picnic"></app-edit-picnic>
+              <app-delete-picnic :picnic="picnic"></app-delete-picnic>
             </template>
           </v-card-title>
           <v-card-media

@@ -27,6 +27,13 @@ export default {
       if (payload.location) {
         picnic.location = payload.location
       }
+    },
+    deletePicnic (state, payload) {
+      const picnic = state.picnics.find((picnic) => {
+        return picnic.id === payload.id
+      })
+      const deleteIndex = state.picnics.indexOf(picnic)
+      state.picnics.splice(deleteIndex, 1)
     }
   },
   actions: {
@@ -44,7 +51,8 @@ export default {
               location: object[i].location,
               date: object[i].date,
               imageUrl: object[i].imageUrl,
-              creatorId: object[i].creatorId
+              creatorId: object[i].creatorId,
+              attendIds: object[i].attendIds
             })
           }
           commit('setPicnics', picnics)
@@ -64,7 +72,8 @@ export default {
         location: payload.location,
         description: payload.description,
         date: payload.date.toISOString(),
-        creatorId: getters.getUser.id
+        creatorId: getters.getUser.id,
+        attendIds: []
       }
       let imageUrl = ''
       let key
@@ -123,6 +132,20 @@ export default {
         () => {
           commit('setLoading', false)
           commit('updatePicnic', payload)
+        }
+      ).catch(
+        (error) => {
+          commit('setLoading', false)
+          console.log(error)
+        }
+      )
+    },
+    deletePicnic ({commit}, payload) {
+      commit('setLoading', true)
+      firebase.database().ref('picnics').child(payload.id).remove().then(
+        () => {
+          commit('setLoading', false)
+          commit('deletePicnic', payload)
         }
       ).catch(
         (error) => {

@@ -10,6 +10,7 @@ import * as firebase from 'firebase'
 import AlertComponent from './components/Shared/Alert.vue'
 import EditPicnicComponent from './components/Picnic/Popup/EditPicnic.vue'
 import JoinPicnicComponent from './components/Picnic/Popup/Register.vue'
+import DeletePicnicComponent from './components/Picnic/Popup/DeletePicnic.vue'
 
 Vue.use(Vuetify, {
   theme: {
@@ -29,6 +30,7 @@ Vue.filter('date', DateFilter)
 Vue.component('app-alert', AlertComponent)
 Vue.component('app-edit-picnic', EditPicnicComponent)
 Vue.component('app-join-picnic', JoinPicnicComponent)
+Vue.component('app-delete-picnic', DeletePicnicComponent)
 
 var config = {
   apiKey: 'AIzaSyBeTFltPF-Fc_GvDCZOaePVZc2lWXDkW_g',

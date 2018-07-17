@@ -249,6 +249,32 @@ export const store = new Vuex.Store({
     autoLogin ({commit}, payload) {
       commit('setUser', {id: payload.uid, joinedPicnics: [], fbKeys: {}})
     },
+    fetchUserPicnics ({commit, getters}, payload) {
+      commit('setLoading', true)
+      firebase.database().ref('/users/' + getters.getUser.id + '/joins/').once('value').then(
+        (data) => {
+          const values = data.val()
+          let joinedPicnics = []
+          let swappedValues = {}
+          for (let key in values) {
+            joinedPicnics.push(values[key])
+            swappedValues[values[key]] = key
+          }
+          const newUser = {
+            id: getters.getUser.id,
+            joinedPicnics: joinedPicnics,
+            fbKeys: swappedValues
+          }
+          commit('setLoading', false)
+          commit('setUser', newUser)
+        }
+      ).catch(
+        (error) => {
+          console.log(error)
+          commit('setLoading', false)
+        }
+      )
+    },
     logout ({commit}) {
       firebase.auth().signOut()
       commit('setUser', null)

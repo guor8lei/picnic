@@ -31,7 +31,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <app-join-picnic :picnicId="picnic.id"></app-join-picnic>
+            <app-join-picnic :picnicId="picnic.id" v-if="isRegistered && !isCreator"></app-join-picnic>
           </v-card-actions>
         </v-card>
       </v-flex>

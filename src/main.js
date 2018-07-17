@@ -50,6 +50,7 @@ new Vue({
       (user) => {
         if (user) {
           this.$store.dispatch('autoLogin', user)
+          this.$store.dispatch('fetchUserPicnics')
         }
       }
     )
